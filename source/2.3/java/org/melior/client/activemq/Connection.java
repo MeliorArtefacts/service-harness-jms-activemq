@@ -33,7 +33,7 @@ public class Connection extends org.melior.client.core.Connection<ActiveMQClient
     final ActiveMQClientConfig configuration,
     final ConnectionPool<ActiveMQClientConfig, Connection, javax.jms.Connection> connectionPool,
     final ActiveMQConnectionFactory connectionFactory) throws RemotingException{
-        super(configuration, connectionPool, javax.jms.Connection.class);
+        super(configuration, connectionPool);
 
         this.connectionFactory = connectionFactory;
   }

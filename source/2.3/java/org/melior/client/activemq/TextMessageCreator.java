@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.client.activemq;
 import javax.jms.JMSException;
@@ -13,44 +13,51 @@ import javax.jms.Session;
 import org.springframework.jms.core.MessageCreator;
 
 /**
- * TODO
+ * Constructs a new ActiveMQ {@code Message} object from a text payload.
+ * <p>
+ * This implementation sets the correlation id in the message headers
+ * to the transaction identifier from the transaction context, to allow
+ * a transaction to be traced to the ActiveMQ server.
  * @author Melior
  * @since 2.3
  */
-public class TextMessageCreator implements MessageCreator{
+public class TextMessageCreator implements MessageCreator {
+
     private String payload;
 
     private String correlationId;
 
-  /**
-   * Constructor.
-   * @param payload The message payload
-   * @param correlationId The correlation identifier
-   */
-  public TextMessageCreator(
-    final String payload,
-    final String correlationId){
+    /**
+     * Constructor.
+     * @param payload The message payload
+     * @param correlationId The correlation identifier
+     */
+    public TextMessageCreator(
+        final String payload,
+        final String correlationId) {
+
         super();
 
         this.payload = payload;
 
         this.correlationId = correlationId;
-  }
+    }
 
-  /**
-   * Create message.
-   * @param session The session
-   * @return The message
-   * @throws JMSException if unable to create the message
-   */
-  public Message createMessage(
-    final Session session) throws JMSException{
+    /**
+     * Create message.
+     * @param session The session
+     * @return The message
+     * @throws JMSException if unable to create the message
+     */
+    public Message createMessage(
+        final Session session) throws JMSException {
+
         Message message;
 
         message = session.createTextMessage(payload);
-    message.setJMSCorrelationID(correlationId);
+        message.setJMSCorrelationID(correlationId);
 
-    return message;
-  }
+        return message;
+    }
 
 }
